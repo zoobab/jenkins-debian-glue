@@ -734,7 +734,23 @@ dist_and_arch_settings
 if [ -n "${PROVIDE_ONLY:-}" ] ; then
   echo "*** Config variable 'PROVIDE_ONLY' is set, ignoring request to run cowbuilder. ***"
 else
+  (
+  flock --timeout 180 9 || bailout 1 "Error: could not lock cowbuilder update process, giving up."
   cowbuilder_init
+  ) 9>/var/lock/jdg-build-and-provide-update."$(id -un)" || bailout 1 "Error while executing cowbuilder init."
+
+  if [ -r /var/lock/jdg-build-and-provide-update."$(id -un)" ] ; then
+    counter=180
+    while [ -r /var/lock/jdg-build-and-provide-update."$(id -un)" ] && [[ $counter -ne 0 ]] ; do
+      einfo "Update process of cowbuilder already running, waiting another second. $counter retries left."
+      sleep 1
+      counter=$(( counter-1 ))
+    done
+  fi
+
+  if [ $counter -eq 0 ] ; then
+    echo "Giving up, executing cowbuilder anyway?!?!"
+  fi
   cowbuilder_run
 fi
 
