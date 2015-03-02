@@ -328,19 +328,20 @@ changelog_generation() {
 
   if [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
     echo "*** Exporting custom variables to debian/control and in the *.dsc ***"
+    TMPFILE=$(mktemp)
     # MY_VERSION_STRING is equal to VERSION_STRING of dch
-    echo "XBS-my-dch-versionstring: $MY_VERSION_STRING" > /tmp/control
+    echo "XBS-my-dch-versionstring: $MY_VERSION_STRING" > $TMPFILE
     # GIT_COMMIT is coming from Jenkins env
-    echo "XBS-my-git-commit: $GIT_COMMIT" >> /tmp/control
+    echo "XBS-my-git-commit: $GIT_COMMIT" >> $TMPFILE
     # GIT_BRANCH is coming from Jenkins env
-    echo "XBS-my-git-branch: $GIT_BRANCH" >> /tmp/control
+    echo "XBS-my-git-branch: $GIT_BRANCH" >> $TMPFILE
     # BUILD_NUMBER is coming from Jenkins env
-    echo "XBS-my-git-buildnumber: $BUILD_NUMBER" >> /tmp/control
+    echo "XBS-my-git-buildnumber: $BUILD_NUMBER" >> $TMPFILE
     # MY_BUILD_VERSION is equal to BUILD_VERSION of dch
-    echo "XBS-my-git-buildversion: $MY_BUILD_VERSION" >> /tmp/control
+    echo "XBS-my-git-buildversion: $MY_BUILD_VERSION" >> $TMPFILE
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
-    echo "XBS-my-dch-timestamp: $MY_TIMESTAMP" >> /tmp/control
-    sed -i '/^Package:/r /tmp/control' debian/control
+    echo "XBS-my-dch-timestamp: $MY_TIMESTAMP" >> $TMPFILE
+    sed -i '/^Package:/r $TMPFILE' debian/control
   fi
 }
 
