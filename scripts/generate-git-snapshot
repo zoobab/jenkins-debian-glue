@@ -341,7 +341,7 @@ changelog_generation() {
     echo "XBS-jdg-git-buildversion: $MY_BUILD_VERSION" >> $TMPFILE
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
     echo "XBS-jdg-dch-timestamp: $MY_TIMESTAMP" >> $TMPFILE
-    sed -i '/^Package:/r $TMPFILE' debian/control
+    sed -i "/^Package:/r ${TMPFILE}" debian/control
   fi
 }
 
