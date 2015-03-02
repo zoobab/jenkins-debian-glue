@@ -338,6 +338,8 @@ changelog_generation() {
     echo "XBS-my-git-buildnumber: $BUILD_NUMBER" >> debian/control
     # MY_BUILD_VERSION is equal to BUILD_VERSION of dch
     echo "XBS-my-git-buildversion: $MY_BUILD_VERSION" >> debian/control
+    # MY_TIMESTAMP is equal to TIMESTAMP of dch
+    echo "XBS-my-dch-timestamp: $MY_TIMESTAMP" >> debian/control
   fi
 }
 
