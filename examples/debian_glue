@@ -75,3 +75,27 @@
 # REPOSITORY_EXTRA_KEYS='http://foorepo.domain.com/key1.gpg,http://barrepo.domain.com/key2.gpg'
 # Default:
 # REPOSITORY_EXTRA_KEYS=
+
+# Export custom fields (such as GIT_COMMIT, BUILD_NUMBER, etc...) in the *.dsc without changing its name.
+# Usage example:
+# EXPORT_FIELDS_IN_DSC="true"
+# Default:
+# EXPORT_FIELDS_IN_DSC="false"
+#
+# (See section "User-defined fields" in
+# https://www.debian.org/doc/debian-policy/ch-controlfields.html), you can set this variable to "true".
+# This will export the following variables from Jenkins build env, such as:
+# 1. BUILD_NUMBER
+# 2. GIT_COMMIT
+# 3. GIT_BRANCH
+# And those other variables from DCH:
+# 5. VERSION_STRING
+# 6. BUILD_VERSION
+# 7. TIMESTAMP
+# 
+# It should then add custom fields to your dsc file:
+# $ cat gyp_0.1~svn1729-3+0~20150302105607.1~1.gbpb9007d.dsc | grep ^My
+# My-Git-Branch: master
+# My-Git-Buildnumber: 1
+# My-Git-Commit: b9007de3555f2da3ebba7a847e3cbd765e6953fe
+# My-Version-String: 0.1~svn1729-3+0~20150302105607.1
