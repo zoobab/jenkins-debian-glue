@@ -90,8 +90,8 @@ version_information() {
 
   echo "*** Version string set to $VERSION_STRING ***"
   
-  if [ ${EXPORT_FIELDS_IN_DSC} = 'true' ]; then
-     echo "Exporting custom variables to display them later in the .dsc"
+  if [ ${EXPORT_FIELDS_IN_DSC} = "true" ]; then
+     # Exporting custom variables to display them later in the .dsc
      export MY_VERSION_STRING="$VERSION_STRING"
      export MY_TIMESTAMP="$TIMESTAMP"
      export MY_BUILD_VERSION="$BUILD_VERSION"
@@ -326,8 +326,8 @@ changelog_generation() {
     fi
   fi
 
-  if [ ${EXPORT_FIELDS_IN_DSC} = 'true' ]; then
-    echo "Exporting custom variables to debian/control"
+  if [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
+    echo "*** Exporting custom variables to debian/control and in the *.dsc ***"
     # MY_VERSION_STRING is equal to VERSION_STRING of dch
     echo "XBS-my-dch-versionstring: $MY_VERSION_STRING" >> debian/control
     # GIT_COMMIT is coming from Jenkins env
