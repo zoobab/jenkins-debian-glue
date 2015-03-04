@@ -330,7 +330,7 @@ changelog_generation() {
     fi
   fi
 
-  if if [ -n "${EXPORT_FIELDS_IN_DSC:-}" ] && [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
+  if [ -n "${EXPORT_FIELDS_IN_DSC:-}" ] && [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
     echo "*** Exporting custom variables to debian/control and in the *.dsc ***"
     TMPFILE=$(mktemp)
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
@@ -347,7 +347,7 @@ changelog_generation() {
     echo "XBS-jdg-git-buildversion: $MY_BUILD_VERSION" >> $TMPFILE
     # if $tag variable exists (lower case args are build arguments), then export it
     if [ ! -z "${tag:-}" ]; then
-    	echo "XBS-jdg-git-tag: $tag" >> $TMPFILE	
+    	echo "XBS-jdg-git-tag: ${tag}" >> $TMPFILE	
     fi
     sed -i "/^Package:/r ${TMPFILE}" debian/control
   fi
