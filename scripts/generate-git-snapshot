@@ -334,9 +334,9 @@ changelog_generation() {
     echo "*** Exporting custom variables to debian/control and in the *.dsc ***"
     TMPFILE=$(mktemp)
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
-    echo "XBS-jdg-dch-timestamp: $MY_TIMESTAMP" >> $TMPFILE
+    echo "XBS-jdg-dch-timestamp: $MY_TIMESTAMP" > $TMPFILE
     # MY_VERSION_STRING is equal to VERSION_STRING of dch
-    echo "XBS-jdg-dch-versionstring: $MY_VERSION_STRING" > $TMPFILE
+    echo "XBS-jdg-dch-versionstring: $MY_VERSION_STRING" >> $TMPFILE
     # GIT_COMMIT is coming from Jenkins env
     echo "XBS-jdg-git-commit: $GIT_COMMIT" >> $TMPFILE
     # GIT_BRANCH is coming from Jenkins env
