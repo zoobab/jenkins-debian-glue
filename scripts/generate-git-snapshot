@@ -341,6 +341,10 @@ changelog_generation() {
     echo "XBS-jdg-git-buildversion: $MY_BUILD_VERSION" >> $TMPFILE
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
     echo "XBS-jdg-dch-timestamp: $MY_TIMESTAMP" >> $TMPFILE
+    # if $tag variable exists (lower case args are build arguments), then export it
+    if [ -z "${tag:-}" ]; then
+    	echo "XBS-jdg-git-tag: $tag" >> $TMPFILE	
+    fi
     sed -i "/^Package:/r ${TMPFILE}" debian/control
   fi
 }
