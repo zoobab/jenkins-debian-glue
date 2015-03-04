@@ -81,7 +81,7 @@ version_information() {
     APPLY_VERSION_WORKAROUND=true
   fi
 
-  if [ ${ADD_TAG_TO_VERSION_STRING} = "true" ] && [ -n "${tag:-}" ] && [ "${tag:-}" != "none" ] ; then
+  if [ -n "${ADD_TAG_TO_VERSION_STRING:-}" ] && [ ${ADD_TAG_TO_VERSION_STRING:-} = "true" ] && [ -n "${tag:-}" ] && [ "${tag:-}" != "none" ] ; then
       VERSION_STRING="${INCREASED_VERSION}+${tag}"
     else
       VERSION_STRING="${INCREASED_VERSION}~${BUILD_VERSION}"
@@ -94,7 +94,7 @@ version_information() {
 
   echo "*** Version string set to $VERSION_STRING ***"
   
-  if [ ${EXPORT_FIELDS_IN_DSC} = "true" ]; then
+  if [ -n "${EXPORT_FIELDS_IN_DSC:-}" ] && [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
      # Exporting custom variables to display them later in the .dsc
      export MY_VERSION_STRING="$VERSION_STRING"
      export MY_TIMESTAMP="$TIMESTAMP"
@@ -330,7 +330,7 @@ changelog_generation() {
     fi
   fi
 
-  if [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
+  if if [ -n "${EXPORT_FIELDS_IN_DSC:-}" ] && [ ${EXPORT_FIELDS_IN_DSC:-} = "true" ]; then
     echo "*** Exporting custom variables to debian/control and in the *.dsc ***"
     TMPFILE=$(mktemp)
     # MY_TIMESTAMP is equal to TIMESTAMP of dch
