@@ -81,7 +81,11 @@ version_information() {
     APPLY_VERSION_WORKAROUND=true
   fi
 
-  VERSION_STRING="${INCREASED_VERSION}~${BUILD_VERSION}"
+  if [ ${ADD_TAG_TO_VERSION_STRING} = "true" ] && [ -n "${tag:-}" ] && [ "${tag:-}" != "none" ] ; then
+      VERSION_STRING="${INCREASED_VERSION}+${tag}"
+    else
+      VERSION_STRING="${INCREASED_VERSION}~${BUILD_VERSION}"
+  fi
 
   if [ -n "${distribution:-}" ] ; then
     echo "Distribution variable found. Adding distribution specific version."
